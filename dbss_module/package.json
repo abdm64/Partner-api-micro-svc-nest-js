@@ -1,0 +1,23 @@
+{
+  "name": "dbss_module",
+  "version": "1.0.0",
+  "description": "api tha retrive data from dbss network using javascript and node js ",
+  "main": "app.js ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "no"
+  },
+  "keywords": [
+    "express",
+    "axios"
+  ],
+  "author": "abdm",
+  "license": "MIT ",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  }
+}
