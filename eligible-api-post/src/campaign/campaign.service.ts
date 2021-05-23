@@ -20,12 +20,13 @@ export class CampaignService {
 
     async saveCamaign(createCampaignDTO : CreateCampaignDTO) : Promise<Campaign>{
 
-            const { msisdn , nbr_transactions , triggerId , triggerDescription,} = createCampaignDTO
+            const { msisdn , nbr_transactions , triggerId , triggerDescription, trigger_attr_06} = createCampaignDTO
             let campaign  = new Campaign()
             campaign.msisdn = msisdn
             campaign.nbr_transactions= nbr_transactions
             campaign.triggerid = triggerId
             campaign.triggerdescription = triggerDescription
+            campaign.trigger_attr_06 =  trigger_attr_06
             
             const campaignOne = await this.campaignRepository.findOne({ msisdn })
 
