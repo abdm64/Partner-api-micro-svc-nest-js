@@ -29,7 +29,7 @@ export class CampaignService {
             
             const campaignOne = await this.campaignRepository.findOne({ msisdn })
 
-            if(campaignOne && this.isDay(campaignOne.insertion_date) ){
+            if(campaignOne){
 
                 try{
                     this.campaignRepository.delete({ msisdn })
@@ -44,7 +44,8 @@ export class CampaignService {
                
             } else {
 
-                throw new NotFoundException('already get bonus in 24 hours')
+                await campaign.save()
+                return campaign
                 
             }
 
@@ -59,18 +60,5 @@ export class CampaignService {
 
 
 
-    isDay(insertionDate : Date)  : boolean {
-
-        let dateInsert =  moment(insertionDate).unix()
-        let dateNow = moment().utcOffset('+0100').unix()
-        const defrentTime = dateNow  - dateInsert
-        const day = 86400  - defrentTime 
     
-    
-    
-    
-    
-    
-     return day < 0
-    }
 }// class 
