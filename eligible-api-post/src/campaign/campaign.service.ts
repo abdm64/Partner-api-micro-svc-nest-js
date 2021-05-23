@@ -58,6 +58,30 @@ export class CampaignService {
 
     }
 
+    async updateEligible(msisdn : number): Promise<Campaign>{
+
+        const campaign = await this.campaignRepository.findOne({ msisdn })
+
+        if(campaign) {
+
+
+            campaign.trigger_attr_01 = "1"
+
+            campaign.save()
+    
+            return campaign
+        } else {
+
+            throw new NotFoundException()
+        }
+        
+
+
+
+
+
+    }
+
 
 
     
