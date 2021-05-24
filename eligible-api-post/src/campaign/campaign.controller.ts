@@ -1,7 +1,8 @@
 import { CampaignService } from './campaign.service';
 import { CreateCampaignDTO } from './DTO/create.campaign.dto';
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import {  Controller } from '@nestjs/common';
 import { Campaign } from './model/campaign.entity';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('campaign/eligible')
 export class CampaignController {
@@ -13,16 +14,19 @@ export class CampaignController {
 
 
 
-    @Post()
-   saveCampaign( @Body() createCampaignDTO : CreateCampaignDTO) : Promise<Campaign> {
+   // @Post()
+    @MessagePattern('add_eligible')
+   saveCampaign(createCampaignDTO : CreateCampaignDTO) : Promise<Campaign> {
 
 
     return this.campaignService.saveCamaign(createCampaignDTO)
 
     }
 
-    @Put('/:msisdn')
-    updateCampaign(@Param('msisdn', ParseIntPipe) msisdn : number): Promise<Campaign> {
+   // @Put('/:msisdn')
+    @MessagePattern('update_eligible_msisdn')
+    updateCampaign(msisdn : number): Promise<Campaign> {
+       
 
         return this.campaignService.updateEligible(msisdn)
     }

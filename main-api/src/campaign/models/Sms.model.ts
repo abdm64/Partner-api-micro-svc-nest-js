@@ -10,6 +10,8 @@ export interface SmsModel {
     isProcessed: number
     AFK_TRIGGERID_MSISDN: string
     TRIGGER_ATTR_09?: string
+    TRIGGER_ATTR_01?: string
+
 
 
 

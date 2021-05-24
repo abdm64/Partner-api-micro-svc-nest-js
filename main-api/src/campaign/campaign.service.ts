@@ -1,12 +1,13 @@
+import { NetworkService } from './helper/Network.service';
 import { EligibleModel } from './models/Eligible.model';
 import { SmsModel } from './models/Sms.model';
-import { Injectable, HttpService, InternalServerErrorException, HttpStatus } from '@nestjs/common';
+import { Injectable,  InternalServerErrorException, HttpStatus, Inject } from '@nestjs/common';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
-import * as config from 'config';
 import { DbssModel } from './models/Dbss';
 import * as moment from 'moment'
+import { ClientProxy } from '@nestjs/microservices';
 
-const dbss_api   = process.env.DBSS ||  config.get('dbss').url;
+
 
 
 
@@ -15,40 +16,47 @@ export class CampaignService {
 
 
 
-  constructor(private httpService: HttpService){
+  constructor( 
+              private networkService : NetworkService,
+              @Inject('SMS_SVC') private readonly smsServiceClient: ClientProxy,
+              @Inject('ELIGIBLE_SVC') private readonly eligibleServiceClient: ClientProxy,){
+                
+              }
 
 
-  }
-
-
- async create(createCampaignDto: CreateCampaignDto): Promise<number>  {
+ async smsTrigger(createCampaignDto: CreateCampaignDto): Promise<number>  {
     const msisdn = createCampaignDto.msisdn
-    const dbssInfo : DbssModel= await   this.getDbssInfo(msisdn)
+    const dbssInfo : DbssModel= await   this.networkService.getDbssInfo(msisdn)
     const eligible = dbssInfo.eligible
     const profile = dbssInfo.profile
+
+    
 
     if (eligible){
 // create sms object 
 const smsTrigger : SmsModel = {
 
-        msisdn : msisdn.toString(),
+        msisdn : msisdn.toString().substring(3),
         incomingTime : moment().utcOffset('+0100').format("YYYY-MM-DD HH:mm:ss"),
-        triggerId : 'P0',
+        triggerId : createCampaignDto.triggerId,
         id : "01",
-        triggerDescription: "SMS",
+        triggerDescription: createCampaignDto.triggerDescription ,
         isProcessed : 0,
         AFK_TRIGGERID_MSISDN : "abdm",
-        TRIGGER_ATTR_09 : profile
+        TRIGGER_ATTR_09 : profile, 
+        TRIGGER_ATTR_01 : '1'
 
 }
 
+
+
 // push sms object to redis
-//console.log(smsTrigger)
+await  this.smsServiceClient.send('save_trigger', smsTrigger).toPromise()
 
 //create eligible object
 const eligibleData : EligibleModel =  {
  
-            msisdn : msisdn,
+            msisdn : parseInt(msisdn.toString().substring(3)),
             triggerId : createCampaignDto.triggerId,
             triggerDescription: createCampaignDto.triggerDescription,
             nbr_transactions : createCampaignDto.nbr_transactions,
@@ -58,10 +66,10 @@ const eligibleData : EligibleModel =  {
   
 }
 
+ await this.eligibleServiceClient.send('add_eligible', eligibleData).toPromise()
 
 
-// push eligible object to redis 
-//console.log(eligibleData)
+
 
 
     } else {
@@ -75,20 +83,41 @@ const eligibleData : EligibleModel =  {
 
   }
 
-  async getDbssInfo(msisdn : number) : Promise<DbssModel>  {
 
 
-const response = await this.httpService.get(`${dbss_api}213${msisdn}`).toPromise()
+ async bonusTrigger(createCampaignDto: CreateCampaignDto) : Promise<number>{
 
 
-    
-   
-  
-    
-//@ts-ignore
-return response.data
-   
+  const msisdn = createCampaignDto.msisdn
+  const dbssInfo : DbssModel= await   this.networkService.getDbssInfo(msisdn)
+  const profile = dbssInfo.profile
+
+  let bonusTrigger : SmsModel = {
+
+    msisdn : msisdn.toString().substring(3),
+    incomingTime : moment().utcOffset('+0100').format("YYYY-MM-DD HH:mm:ss"),
+    triggerId : createCampaignDto.triggerId,
+    id : "01",
+    triggerDescription: createCampaignDto.triggerDescription ,
+    isProcessed : 0,
+    AFK_TRIGGERID_MSISDN :"ab" ,
+    TRIGGER_ATTR_09 : profile, 
+    TRIGGER_ATTR_01 : '1'
+
+
+
   }
+
+  await this.smsServiceClient.send('save_trigger', bonusTrigger)
+  await this.eligibleServiceClient.send('update_eligible_msisdn', parseInt(msisdn.toString().substring(3))).toPromise()
+
+  return HttpStatus.CREATED
+  }
+
+
+
+
+  
 
  
 }

@@ -11,6 +11,7 @@ export class TriggerService {
 
 
     }
+    
 
 
     async saveTrigger( createTriggerDto : CreateTriggerDTO) : Promise<Trigger>{

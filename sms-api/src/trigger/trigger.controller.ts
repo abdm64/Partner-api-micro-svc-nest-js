@@ -1,10 +1,11 @@
 import { TriggerService } from './trigger.service';
 import { CreateTriggerDTO } from './DTO/create.trigger.dto';
 import { Trigger } from './trigger.entity';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 
 
-@Controller('trigger')
+@Controller()
 export class TriggerController {
 
     constructor(private triggerService : TriggerService){
@@ -14,9 +15,10 @@ export class TriggerController {
 
 
 
-    @Post()
-    saveTrigger(@Body() createTriggerDTO: CreateTriggerDTO) : Promise<Trigger> {
-      
+    @MessagePattern('save_trigger')
+    saveTrigger( createTriggerDTO: CreateTriggerDTO) : Promise<Trigger> {
+        
+     
 
         return this.triggerService.saveTrigger(createTriggerDTO)
     }

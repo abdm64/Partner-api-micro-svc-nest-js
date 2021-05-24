@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { CampaignService } from './campaign.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 
@@ -7,9 +7,14 @@ import { CreateCampaignDto } from './dto/create-campaign.dto';
 export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
-  @Post()
-  create(@Body() createCampaignDto: CreateCampaignDto) {
-    return this.campaignService.create(createCampaignDto);
+  @Post('sms')
+  smsTrigger(@Body() createCampaignDto: CreateCampaignDto) {
+    return this.campaignService.smsTrigger(createCampaignDto);
+  }
+
+  @Post('bonus')
+  bonusTrigger(@Body() createCampaignDto: CreateCampaignDto) {
+    return this.campaignService.bonusTrigger(createCampaignDto);
   }
 
   
