@@ -1,8 +1,8 @@
-import { BaseEntity, Entity,  Column,PrimaryColumn, CreateDateColumn } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column,PrimaryColumn, CreateDateColumn } from 'typeorm';
 
 
-@Entity()
-export class Campaign extends BaseEntity {
+@Entity('eligible_to_heetch')
+export class Heetch extends BaseEntity {
 
 
     @PrimaryColumn()
