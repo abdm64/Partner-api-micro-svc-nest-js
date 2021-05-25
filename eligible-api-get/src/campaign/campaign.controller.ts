@@ -11,7 +11,7 @@ export class CampaignController {
   
 
   @Get('eligible/:msisdn')
-  findOne(@Param('msisdn') msisdn: string) : Promise<CreateCampaignDto> {
+  findOne(@Param('msisdn') msisdn: string) : Promise<any> {
     return this.campaignService.findOne(+msisdn);
   }
 

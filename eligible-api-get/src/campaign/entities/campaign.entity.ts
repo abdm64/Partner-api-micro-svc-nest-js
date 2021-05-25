@@ -1,11 +1,14 @@
-import { BaseEntity, Entity,  Column,PrimaryColumn, CreateDateColumn } from 'typeorm';
+import { BaseEntity, Entity,  Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 
 @Entity()
 export class Campaign extends BaseEntity {
+ 
+    @PrimaryGeneratedColumn('increment')
+    tabid : number;
 
 
-    @PrimaryColumn()
+    @Column({nullable: false,})
     msisdn : number
 
 

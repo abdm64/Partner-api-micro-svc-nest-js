@@ -107,9 +107,13 @@ const eligibleData : EligibleModel =  {
 
 
   }
+const updateData = {
+  msisdn : parseInt(msisdn.toString().substring(3)),
+  triggerId : createCampaignDto.triggerId
 
+}
   await this.smsServiceClient.send('save_trigger', bonusTrigger)
-  await this.eligibleServiceClient.send('update_eligible_msisdn', parseInt(msisdn.toString().substring(3))).toPromise()
+  await this.eligibleServiceClient.send('update_eligible_msisdn', updateData).toPromise()
 
   return HttpStatus.CREATED
   }

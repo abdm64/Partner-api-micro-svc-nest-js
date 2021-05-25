@@ -27,13 +27,14 @@ export class CampaignService {
             campaign.triggerid = triggerId
             campaign.triggerdescription = triggerDescription
             campaign.trigger_attr_06 =  trigger_attr_06
-            
-            const campaignOne = await this.campaignRepository.findOne({ msisdn })
+
+           
+            const campaignOne = await this.campaignRepository.findOne({ msisdn, triggerid : triggerId })
 
             if(campaignOne){
 
                 try{
-                    this.campaignRepository.delete({ msisdn })
+                    this.campaignRepository.delete({ msisdn, triggerid : triggerId  })
                     await campaign.save()
    
                  
@@ -59,10 +60,10 @@ export class CampaignService {
 
     }
 
-    async updateEligible(msisdn : number): Promise<Campaign>{
+    async updateEligible(msisdn : number, triggerId: string): Promise<Campaign>{
       
 
-        const campaign = await this.campaignRepository.findOne({ msisdn })
+        const campaign = await this.campaignRepository.findOne({ msisdn , triggerId})
 
         if(campaign) {
 

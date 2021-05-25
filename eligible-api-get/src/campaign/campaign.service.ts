@@ -18,40 +18,26 @@ export class CampaignService {
   }
   
 
-async  findOne(msisdnWorld: number): Promise<CreateCampaignDto> {
+async  findOne(msisdnWorld: number): Promise<Campaign[]> {
 
     const msisdn = parseInt(msisdnWorld.toString().substring(3))
-    const campaignOne = await this.campaignRepository.findOne({ msisdn : msisdn })
-    const heetchOne = await this.heetchRepository.findOne({ msisdn : msisdn })
-    const isDay = this.checkTime(campaignOne.insertion_date)
-    const eligibleCampaign  = campaignOne && campaignOne.trigger_attr_01 === '1' && isDay
+   // const campaignOne = await this.campaignRepository.findOne({ msisdn : msisdn, trigger_attr_01 : '1' })
+  
+    const campaignMulti = await (await this.campaignRepository.find({ msisdn, trigger_attr_01 : '1' }))
+  
+
+    const filterArray = this.filterEligible(campaignMulti)
+   
+   
 
 
 
-    if(eligibleCampaign){
-      const campaign : CreateCampaignDto = {
-
-        msisdn : parseInt(`213${campaignOne.msisdn}`),
-        nbr_transactions : campaignOne.nbr_transactions,
-        triggerId: campaignOne.triggerid,
-        triggerDescription : campaignOne.triggerdescription,
-        notificationtime : campaignOne.notificationtime || null,
-        trigger_attr_01 : campaignOne.trigger_attr_01 || null,
-        trigger_attr_02 : campaignOne.trigger_attr_02 || null,
-        trigger_attr_03 : campaignOne.trigger_attr_03 || null,
-        trigger_attr_04 : campaignOne.trigger_attr_04 || null,
-        trigger_attr_05 : campaignOne.trigger_attr_05 || null,
-        trigger_attr_06 : campaignOne.trigger_attr_06 || null,
-        trigger_attr_07 : campaignOne.trigger_attr_07 || null,
-        trigger_attr_08 : campaignOne.trigger_attr_08 || null,
-        trigger_attr_09 : campaignOne.trigger_attr_09 || null,
+    if(filterArray.length > 0){
+      
+      
 
 
-
-      }
-
-
-      return  campaign
+      return  filterArray
 
     } else {
 
@@ -73,6 +59,35 @@ async  findOne(msisdnWorld: number): Promise<CreateCampaignDto> {
 
   return currectTimeSecond < 86400
  
+}
+
+
+filterEligible(campaignArray : Campaign[]) : Campaign[] {
+
+   let filterdArray  = campaignArray.filter((elm) => {
+
+
+return this.checkTime(elm.insertion_date)
+   })
+   
+    filterdArray.map((elm)=> {
+
+    delete elm.tabid
+    elm.msisdn = parseInt(`213${elm.msisdn}`)
+
+
+
+   })
+ 
+
+   
+
+
+
+
+
+return filterdArray
+
 }
 
 

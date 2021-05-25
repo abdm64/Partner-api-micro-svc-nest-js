@@ -25,9 +25,10 @@ export class CampaignController {
 
    // @Put('/:msisdn')
     @MessagePattern('update_eligible_msisdn')
-    updateCampaign(msisdn : number): Promise<Campaign> {
-       
+    updateCampaign(update : any ): Promise<Campaign> {
+        let msisdn = update.msisdn
+        let triggerId = update.triggerId
 
-        return this.campaignService.updateEligible(msisdn)
+        return this.campaignService.updateEligible(msisdn,)
     }
 }

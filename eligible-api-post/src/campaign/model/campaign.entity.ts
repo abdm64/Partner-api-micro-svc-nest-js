@@ -5,7 +5,12 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column,PrimaryColumn, Creat
 export class Campaign extends BaseEntity {
 
 
-    @PrimaryColumn()
+   
+    @PrimaryGeneratedColumn('increment')
+    tabid : number;
+
+
+    @Column({nullable: false,})
     msisdn : number
 
 
