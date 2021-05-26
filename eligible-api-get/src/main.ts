@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('dte/api/v1')
+  app.setGlobalPrefix('dte-campaign/api/v1')
   await app.listen(3001);
 }
 bootstrap();

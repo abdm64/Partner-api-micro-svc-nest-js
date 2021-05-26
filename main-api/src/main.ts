@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('dte-campaign/api/v1')
+  app.setGlobalPrefix('dte-cms/api/v1')
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }

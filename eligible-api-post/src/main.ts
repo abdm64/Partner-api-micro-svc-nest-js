@@ -10,7 +10,7 @@ async function bootstrap() {
   const redisOptions: MicroserviceOptions = {
     transport: Transport.REDIS,
     options: {
-      url:    process.env.REDIS ||  redisConfig.url ,
+      url:    process.env.REDIS_HOST ||  redisConfig.url ,
     },
   }
   
