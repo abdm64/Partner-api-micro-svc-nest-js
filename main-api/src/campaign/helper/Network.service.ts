@@ -2,7 +2,7 @@ import {  HttpService,Injectable  } from '@nestjs/common';
 import * as config from 'config';
 import { DbssModel } from '../models/Dbss';
 
-const dbss_api   = process.env.DBSS ||  config.get('dbss').url;
+const dbss_api   = process.env.DBSS_API ||  config.get('dbss').url;
 
 @Injectable()
 export class NetworkService {
