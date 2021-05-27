@@ -10,10 +10,10 @@ spec:
   rules:
     - http:
         paths:
-          - path: /dte-campaign/api/v1/campaign/eligible
+          - path: /dte-campaign/api/v1/campaign/eligible/?(.*)
             backend:
               serviceName: eligible-api-svc
-              servicePort: 3000
+              servicePort: 3001
           - path: /dte-cms/api/v1/campaign/?(.*)
             backend:
               serviceName: getway-api-svc

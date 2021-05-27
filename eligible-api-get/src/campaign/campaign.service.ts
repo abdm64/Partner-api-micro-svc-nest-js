@@ -1,4 +1,4 @@
-import { Heetch } from './entities/heetch.entity';
+
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,7 +10,7 @@ import * as moment from 'moment'
 @Injectable()
 export class CampaignService {
   constructor(@InjectRepository(Campaign) private campaignRepository: Repository<Campaign>,
-              @InjectRepository(Heetch) private heetchRepository: Repository<Heetch>
+            
   ){
 
 
