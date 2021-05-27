@@ -12,7 +12,8 @@ export class TriggerRepository  extends Repository<Trigger>{
 
     async saveTrigger ( createTriggerDto : CreateTriggerDTO) : Promise<Trigger>{
 
-        const {   msisdn,
+        const {   
+            msisdn,
             incomingTime, 
             triggerId, 
             isProcessed,  

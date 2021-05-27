@@ -60,7 +60,7 @@ const eligibleData : EligibleModel =  {
             triggerId : createCampaignDto.triggerId,
             triggerDescription: createCampaignDto.triggerDescription,
             nbr_transactions : createCampaignDto.nbr_transactions,
-            trigger_attr_01 : '1',
+            trigger_attr_01 : '2',
             trigger_attr_06 : profile
   
   
@@ -100,9 +100,9 @@ const eligibleData : EligibleModel =  {
     id : "01",
     triggerDescription: createCampaignDto.triggerDescription ,
     isProcessed : 0,
-    AFK_TRIGGERID_MSISDN :"ab" ,
+    AFK_TRIGGERID_MSISDN :" " ,
     TRIGGER_ATTR_09 : profile, 
-    TRIGGER_ATTR_01 : '1'
+    TRIGGER_ATTR_01 : '2'
 
 
 

@@ -1,5 +1,0 @@
-
-dbss: 
-  url: http://10.16.153.135:3003/dte-dbss/api/v1/info/   
-redis:
-  url:  redis://localhost:6379   

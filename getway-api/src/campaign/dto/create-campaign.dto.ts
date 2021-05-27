@@ -1,6 +1,6 @@
 
 
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, Length } from 'class-validator';
 
 
 export class CreateCampaignDto {
@@ -9,10 +9,11 @@ export class CreateCampaignDto {
     
     @IsNotEmpty()
     @IsNumber()
+   // @Length(10)
     msisdn: number
 
 
-    @IsNotEmpty()
+
     @IsNumber()
     nbr_transactions : number
 

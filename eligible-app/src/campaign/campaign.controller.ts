@@ -29,6 +29,6 @@ export class CampaignController {
         let msisdn = update.msisdn
         let triggerId = update.triggerId
 
-        return this.campaignService.updateEligible(msisdn,)
+        return this.campaignService.updateEligible(msisdn,triggerId)
     }
 }

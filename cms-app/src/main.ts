@@ -16,9 +16,7 @@ async function bootstrap() {
   
   const app = await NestFactory.createMicroservice(AppModule, redisOptions);
   app.useGlobalPipes(new ValidationPipe());
+  app.listen(() => console.log('CMS Service  is listening'));
 
-  app.listen(() => console.log('SMS Service  is listening'));
-  // app.setGlobalPrefix('dte/api/v1')
-  // await app.listen(3000);
 }
 bootstrap();

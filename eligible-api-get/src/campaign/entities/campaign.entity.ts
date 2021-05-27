@@ -17,11 +17,11 @@ export class Campaign extends BaseEntity {
     nbr_transactions : number
 
     @Column({ nullable: false,})
-    triggerid : string
+    triggerId : string
 
     
     @Column({ nullable: false,})
-    triggerdescription : string
+    triggerDescription : string
 
     
     @Column({ nullable: true,})
