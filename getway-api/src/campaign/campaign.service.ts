@@ -1,7 +1,7 @@
 import { NetworkService } from './helper/Network.service';
 import { EligibleModel } from './models/Eligible.model';
 import { SmsModel } from './models/Sms.model';
-import { Injectable,  InternalServerErrorException, HttpStatus, Inject } from '@nestjs/common';
+import { Injectable,  InternalServerErrorException, HttpStatus, Inject,OnApplicationBootstrap } from '@nestjs/common';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { DbssModel } from './models/Dbss';
 import * as moment from 'moment'
@@ -12,7 +12,7 @@ import { ClientProxy } from '@nestjs/microservices';
 
 
 @Injectable()
-export class CampaignService {
+export class CampaignService implements OnApplicationBootstrap {
 
 
 
@@ -22,6 +22,11 @@ export class CampaignService {
               @Inject('ELIGIBLE_SVC') private readonly eligibleServiceClient: ClientProxy,){
                 
               }
+            async  onApplicationBootstrap() {
+               await  this.smsServiceClient.connect()
+               await this.eligibleServiceClient.connect()
+               
+            }
 
 
  async smsTrigger(createCampaignDto: CreateCampaignDto): Promise<number>  {

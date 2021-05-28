@@ -26,7 +26,7 @@ const redisConfig = config.get('redis');
         name: 'ELIGIBLE_SVC',
         transport: Transport.REDIS,
         options: {
-          url:  process.env.REDIS ||  redisConfig.url ,
+          url:  process.env.REDIS_HOST ||  redisConfig.url ,
         }
       }
     ])
