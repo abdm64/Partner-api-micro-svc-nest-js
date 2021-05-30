@@ -2,32 +2,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-depl
+  name: nats-depl
   namespace:  cvm-prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: redis-event-bus
+      component: nats-event-bus
   template:
     metadata:
       labels:
-        component: redis-event-bus
+        component: nats-event-bus
     spec:
       containers:
-        - name: redis-event-bus
-          image: redis
+        - name: nats-event-bus
+          image: nats
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-event-bus-svc
+  name: nats-event-bus-svc
   namespace:  cvm-prod
 spec:
   selector:
-    component: redis-event-bus
+    component: rnats-event-bus
   ports:
-    - name: redis-port
+    - name: nats-port
       protocol: TCP
-      port: 6379
-      targetPort: 6379
+      port: 4222
+      targetPort: 4222

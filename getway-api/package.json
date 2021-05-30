@@ -30,6 +30,7 @@
     "class-validator": "^0.13.1",
     "config": "^3.3.6",
     "moment": "^2.29.1",
+    "nats": "^1.4.12",
     "redis": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

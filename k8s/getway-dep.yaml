@@ -22,8 +22,8 @@ spec:
         env:  
           - name: DBSS_API
             value: http://dbss-api-svc:3000
-          - name: REDIS_HOST
-            value: redis://redis-event-bus-svc:6379
+          - name: NATS_HOST
+            value: nats://nats-event-bus:4222
 ---
 
 apiVersion: v1

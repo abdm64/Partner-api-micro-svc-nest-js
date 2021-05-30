@@ -7,7 +7,7 @@ import { ClientsModule, MicroserviceOptions, Transport } from '@nestjs/microserv
 
 import * as config from 'config';
 
-const redisConfig = config.get('redis');
+const natsConfig = config.get('nats');
 
 
 
@@ -15,18 +15,10 @@ const redisConfig = config.get('redis');
   imports: [HttpModule,
     ClientsModule.register([
       {
-        name: 'SMS_SVC',
-        transport: Transport.REDIS,
+        name: 'CMS_SVC',
+        transport: Transport.NATS,
         options: {
-          url:  process.env.REDIS_HOST ||  redisConfig.url ,
-        }
-      },
-
-      {
-        name: 'ELIGIBLE_SVC',
-        transport: Transport.REDIS,
-        options: {
-          url:  process.env.REDIS_HOST ||  redisConfig.url ,
+          url:  process.env.NATS_HOST ||  natsConfig.url ,
         }
       }
     ])

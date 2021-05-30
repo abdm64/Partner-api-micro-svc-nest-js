@@ -18,13 +18,13 @@ export class CampaignService implements OnApplicationBootstrap {
 
   constructor( 
               private networkService : NetworkService,
-              @Inject('SMS_SVC') private readonly smsServiceClient: ClientProxy,
-              @Inject('ELIGIBLE_SVC') private readonly eligibleServiceClient: ClientProxy,){
+              @Inject('CMS_SVC') private readonly cmsServiceClient: ClientProxy,
+             ){
                 
               }
             async  onApplicationBootstrap() {
-               await  this.smsServiceClient.connect()
-               await this.eligibleServiceClient.connect()
+               await  this.cmsServiceClient.connect()
+              
                
             }
 
@@ -56,7 +56,7 @@ const smsTrigger : SmsModel = {
 
 
 // push sms object to redis
-await  this.smsServiceClient.send('save_trigger', smsTrigger).toPromise()
+await  this.cmsServiceClient.send('save_trigger', smsTrigger).toPromise()
 
 //create eligible object
 const eligibleData : EligibleModel =  {
@@ -71,7 +71,7 @@ const eligibleData : EligibleModel =  {
   
 }
 
- await this.eligibleServiceClient.send('add_eligible', eligibleData).toPromise()
+ await this.cmsServiceClient.send('add_eligible', eligibleData).toPromise()
 
 
 
@@ -117,8 +117,8 @@ const updateData = {
   triggerId : createCampaignDto.triggerId
 
 }
-  await this.smsServiceClient.send('save_trigger', bonusTrigger)
-  await this.eligibleServiceClient.send('update_eligible_msisdn', updateData).toPromise()
+  await this.cmsServiceClient.send('save_trigger', bonusTrigger)
+  await this.cmsServiceClient.send('update_eligible_msisdn', updateData).toPromise()
 
   return HttpStatus.CREATED
   }

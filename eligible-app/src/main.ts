@@ -3,14 +3,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import * as config from 'config';
-const redisConfig = config.get('redis');
+const natsConfig = config.get('nats');
 
 async function bootstrap() {
 
   const redisOptions: MicroserviceOptions = {
-    transport: Transport.REDIS,
+    transport: Transport.NATS,
     options: {
-      url:    process.env.REDIS_HOST ||  redisConfig.url ,
+      url:    process.env.REDIS_HOST ||  natsConfig.url ,
     },
   }
   

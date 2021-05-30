@@ -15,11 +15,10 @@ spec:
     spec:
       containers: 
       - name: dbss-api 
-        image: dmp-api-k8s-registry.com:443/dte-cms-app:V0.0.1 #abdm6464/dte-dnbo:V0.0.8
+        image: dmp-api-k8s-registry.com:443/dte-cms-app:V0.0.3 #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         env:  
-          - name: REDIS_HOST
-            value: redis://redis-event-bus:6379
-        #   - name: DBSS_API
-        #     value: http://dbss-svc:3000
+          - name: NATS_HOST
+            value: nats://nats-event-bus:4222
+
        
