@@ -14,12 +14,12 @@
   - [Deployment Architecture Explained](#dep-exp)
   - [Docker](#docker)
   - [Kubernetes GKE](#k8s)
-- [Built Using](#built_using)
+- [Tools](#built_using)
 - [Author](#authors)
 
 ## 🧐 About <a name = "about"></a>
 
-- This a micro service application that // 
+- This a micro service application that send sms  via partners to the  client by executing trigger in the cms module and allow to the client activate that bonus via [Djezzy App](https://play.google.com/store/apps/details?id=com.djezzy.internet&hl=en&gl=US) .
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
