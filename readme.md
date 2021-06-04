@@ -164,7 +164,7 @@ kubectl delete  -f k8s
 ```
 this will delete all kubernetes objects
 
-## ⛏️ Built Using <a name = "built_using"></a>
+## ⛏️ Tools <a name = "built_using"></a>
 
 
 - [NestJS](https://nestjs.com/) - A progressive Node.js framework.
