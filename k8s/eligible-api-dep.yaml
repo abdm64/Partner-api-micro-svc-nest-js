@@ -18,10 +18,30 @@ spec:
         image: dmp-api-k8s-registry.com:443/dte-eligible-api:0.0.3 #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         ports: 
-        - containerPort: 3001 
+        - containerPort: 3000 
         env:  
-          - name: NATS_HOST
-            value: nats://nats-event-bus:6379
+          - name: REDIS_HOST
+            value: redis://redis-mq-event-bus:6379
+          - name: DB_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: partner-config
+                key: pg_host
+          - name: DB_USER
+            valueFrom: 
+              configMapKeyRef:
+                name: partner-config
+                key: pg_user   
+          - name: DB_PASS
+            valueFrom: 
+              configMapKeyRef:
+                name: partner-config
+                key: pg_pass
+          - name: DB_NAME
+            valueFrom: 
+              configMapKeyRef:
+                name: partner-config
+                key: pg_name            
 ---
 
 apiVersion: v1

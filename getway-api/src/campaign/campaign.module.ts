@@ -16,9 +16,9 @@ const natsConfig = config.get('nats');
     ClientsModule.register([
       {
         name: 'CMS_SVC',
-        transport: Transport.NATS,
+        transport: Transport.REDIS,
         options: {
-          url:  process.env.NATS_HOST ||  natsConfig.url ,
+          url:  process.env.REDIS_HOST ||  natsConfig.url ,
         }
       }
     ])

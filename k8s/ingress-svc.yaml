@@ -13,7 +13,7 @@ spec:
           - path: /dte-campaign/api/v1/campaign/eligible/?(.*)
             backend:
               serviceName: eligible-api-svc
-              servicePort: 3001
+              servicePort: 3000
           - path: /dte-cms/api/v1/campaign/?(.*)
             backend:
               serviceName: getway-api-svc

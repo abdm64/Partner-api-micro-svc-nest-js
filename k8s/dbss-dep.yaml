@@ -18,13 +18,15 @@ spec:
         image: dmp-api-k8s-registry.com:443/dte-dbss-api:V0.0.1 #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         ports: 
-        - containerPort: 3000 
-        # env:  
-        #   - name: DBSS_API
-        #     value: http://dbss-svc:3000
-        #   - name: REDIS_HOST
-        #     value: redis://redis-event-bus:6379
----
+        - containerPort: 3003 
+        env:  
+          - name : DBSS_API
+            valueFrom: 
+              configMapKeyRef:
+                name: partner-config
+                key: dbss_api  
+---                
+        
 
 apiVersion: v1
 kind: Service
@@ -34,7 +36,7 @@ metadata:
 spec: 
   type: ClusterIP
   ports: 
-    - port: 3000 
-      targetPort: 3000 
+    - port: 3003 
+      targetPort: 3003 
   selector: 
     component: dbss-api

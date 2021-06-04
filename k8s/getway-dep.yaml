@@ -21,9 +21,9 @@ spec:
         - containerPort: 3000 
         env:  
           - name: DBSS_API
-            value: http://dbss-api-svc:3000
-          - name: NATS_HOST
-            value: nats://nats-event-bus:4222
+            value: http://dbss-api-svc:3003
+          - name: REDIS_HOST
+            value: redis://redis-mq-event-bus:6379
 ---
 
 apiVersion: v1

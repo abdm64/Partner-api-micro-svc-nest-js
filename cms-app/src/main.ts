@@ -8,9 +8,9 @@ const natsConfig = config.get('nats');
 
 async function bootstrap() {
   const redisOptions: MicroserviceOptions = {
-    transport: Transport.NATS,
+    transport: Transport.REDIS,
     options: {
-      url:    process.env.NATS_HOST ||  natsConfig.url ,
+      url:    process.env.REDIS_HOST ||  natsConfig.url ,
     },
   }
   
