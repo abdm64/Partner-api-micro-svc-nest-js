@@ -114,17 +114,6 @@ docker build -t my-app-name:v1 .
 
 you need to push the image to [Docker hub](https://hub.docker.com) or your own private  registry .
 
-### Run Docker image
-
-- Run your Docker image for the application by the command line
-
-```
-docker run -e [inject your env variable here] my-app-name:v1
-
-```
-PS: you need to run the docker image and attached it to a  running Postgres image 
-
-
 
 ## Kubernetes <a name = "k8s"></a>
 
@@ -136,34 +125,33 @@ PS: you need to run the docker image and attached it to a  running Postgres imag
 
 
 
-- Please fellow the instruction in the configMap file  to setup the proper environment variables value in order the application works 
+- Please fellow the instruction in the configMap file  to setup the proper environment variables value in order the application works (action required)
+-  you can use jenkins in order to automate the proccess of deployment when the developer push to the production ( main ) branch use jenkinsfile in CI directory 
+- to deploy manualy  the micro services application you need just run the script   deploy.sh by running the fellowing  cammand 
 
-
-
-
-
-- make sure to install redis with hight avability the recomended way is sung helm and bitnami image 
 
 
 ```
-helm install  redis-mq  bitnami/redis -n <your-namespace>
+sh deploy.sh
 
 ```
 
-- To run the application on Kubernetes cluster  just run the fellowing command
 
-```
-kubectl apply -f k8s
+this will : 
 
-```
+   - deploy production envirment  for redis to work as event bus 
+   - build all images for micro services. 
+   - push all images to the docker registry
+   - deploy all micro service app to production envirment on kubernetes  fellowing the previous architecture.
+
+
+
 
  this will create the fellowing  Kubernetes objects:
 
   - Namespace a virtual cluster for all your resource related to this application ( pods services secret)
-  - Deployment for the application with one pod ( running container) insuring high availability for that service. 
-  - Deployment for the Postgres database in one pod  ( not the perfect solution for stateful application )
-  - PVC to store the data from the database 
-  - Cluster ip service that connected to the pod .
+  - Deployment for  all the application with one pod ( running container) insuring high availability for  the service. 
+  - Cluster ip services that connected to the pods .
   - ingress service that connect the cluster ip service with ingress-nginx load balancer to expose it outside (Public) .
 
  PS : you must install NGINX Ingress Controller on your k8s cluster before applying the final deployment please check this link https://kubernetes.github.io/ingress-nginx/deploy/ for more information. 

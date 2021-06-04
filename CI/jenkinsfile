@@ -1,38 +1,17 @@
 pipeline {
   agent any
   stages {
-    stage('Docker Build') {
+    stage('Deploy to Prod ') {
+      when { branch 'main' }
 
       steps {
-       sh "git pull origin master "
-        sh "docker build -t abdm6464/cms-app :${env.BUILD_NUMBER} ./cms-app "
-         sh "docker build -t abdm6464/dbss_module:${env.BUILD_NUMBER}  ./dbss_module"
-          sh "docker build -t abdm6464/eligible-api:${env.BUILD_NUMBER} ./eligible-api-get"
-           sh "docker build -t abdm6464/eligible-app:${env.BUILD_NUMBER} ./eligible-app"
-            sh "docker build -t abdm6464/getway-api:${env.BUILD_NUMBER} ./getway-api"
+       sh "git pull origin  main  " 
+        sh "../deploy.sh"
       }
     }
-    stage('Docker Push') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh "docker push kmlaydin/podinfo:${env.BUILD_NUMBER}"
-        }
-      }
-    }
-    stage('Docker Remove Image') {
-      steps {
-        sh "docker rmi kmlaydin/podinfo:${env.BUILD_NUMBER}"
-      }
-    }
-    stage('Apply Kubernetes Files') {
-      steps {
-          withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
-          sh 'kubectl apply -f service.yaml'
-        }
-      }
-  }
+   
+
+
 }
 post {
     success {

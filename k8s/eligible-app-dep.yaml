@@ -14,7 +14,7 @@ spec:
         component: eligible-app
     spec:
       containers: 
-      - name: deligible-app 
+      - name: eligible-app 
         image: dmp-api-k8s-registry.com:443/dte-eligible-app:V0.0.1 #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         env:  

@@ -15,7 +15,7 @@ spec:
     spec:
       containers: 
       - name: dbss-api 
-        image: dmp-api-k8s-registry.com:443/dte-dbss-api:V0.0.1 #abdm6464/dte-dnbo:V0.0.8
+        image: dmp-api-k8s-registry.com:443/dte-dbss-api #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         ports: 
         - containerPort: 3003 

@@ -15,7 +15,7 @@ spec:
     spec:
       containers: 
       - name: getway-api 
-        image: abdm6464/getway-api:v0.0.2 #abdm6464/dte-dnbo:V0.0.8
+        image: abdm6464/getway-api #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         ports: 
         - containerPort: 3000 

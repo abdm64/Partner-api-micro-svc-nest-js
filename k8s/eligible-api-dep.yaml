@@ -15,7 +15,7 @@ spec:
     spec:
       containers: 
       - name: eligible-api 
-        image: dmp-api-k8s-registry.com:443/dte-eligible-api:0.0.3 #abdm6464/dte-dnbo:V0.0.8
+        image: dmp-api-k8s-registry.com:443/dte-eligible-api #abdm6464/dte-dnbo:V0.0.8
         imagePullPolicy: IfNotPresent 
         ports: 
         - containerPort: 3000 
