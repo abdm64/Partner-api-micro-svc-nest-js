@@ -31,15 +31,15 @@ export class TriggerRepository  extends Repository<Trigger>{
         const notificationTime = createTriggerDto.notificationTime || null
         
 
-        const data_01 = createTriggerDto.data_01 || null
-        const data_02 = createTriggerDto.data_02 || null
-        const data_03 = createTriggerDto.data_03 || null
-        const data_04 = createTriggerDto.data_04 || null
-        const data_05 = createTriggerDto.data_05 || null
-        const data_06 = createTriggerDto.data_06 || null
-        const data_07 = createTriggerDto.data_07 || null
-        const data_08 = createTriggerDto.data_08 || null
-        const data_09 = createTriggerDto.data_09 || null
+        const data_01 = createTriggerDto.trigger_attr_01 || null
+        const data_02 = createTriggerDto.trigger_attr_02 || null
+        const data_03 = createTriggerDto.trigger_attr_03 || null
+        const data_04 = createTriggerDto.trigger_attr_04 || null
+        const data_05 = createTriggerDto.trigger_attr_05 || null
+        const data_06 = createTriggerDto.trigger_attr_06 || null
+        const data_07 = createTriggerDto.trigger_attr_07 || null
+        const data_08 = createTriggerDto.trigger_attr_08 || null
+        const data_09 = createTriggerDto.trigger_attr_09 || null
    
         const trigger = new Trigger() 
 

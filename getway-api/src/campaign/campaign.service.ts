@@ -1,7 +1,8 @@
+import { TriggerRepository } from './../../../cms-app/src/trigger/trigger.repository';
 import { NetworkService } from './helper/Network.service';
 import { EligibleModel } from './models/Eligible.model';
 import { SmsModel } from './models/Sms.model';
-import { Injectable,  InternalServerErrorException, HttpStatus, Inject,OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable,  InternalServerErrorException, HttpStatus, Inject,OnApplicationBootstrap,OnModuleInit, BadRequestException } from '@nestjs/common';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { DbssModel } from './models/Dbss';
 import * as moment from 'moment'
@@ -12,7 +13,7 @@ import { ClientProxy } from '@nestjs/microservices';
 
 
 @Injectable()
-export class CampaignService implements OnApplicationBootstrap {
+export class CampaignService implements  OnModuleInit {
 
 
 
@@ -22,10 +23,23 @@ export class CampaignService implements OnApplicationBootstrap {
              ){
                 
               }
-            async  onApplicationBootstrap() {
-               await  this.cmsServiceClient.connect()
-              
-               
+
+  // onApplicationBootstrap() {
+  //   throw new Error('Method not implemented.');
+  // }
+          
+
+            async onModuleInit() {
+              await this.cmsServiceClient.connect();
+              setInterval(async () => {
+                try {
+                  await this.cmsServiceClient.emit('healthcheck', 'healthcheck').toPromise();
+                } catch (e) {
+                  // Sending the message has failed, start recovery
+                  console.error(e);
+                  process.exit(1);
+                }
+              }, 1000);
             }
 
 
@@ -48,8 +62,19 @@ const smsTrigger : SmsModel = {
         triggerDescription: createCampaignDto.triggerDescription ,
         isProcessed : 0,
         AFK_TRIGGERID_MSISDN : "abdm",
-        TRIGGER_ATTR_09 : profile, 
-        TRIGGER_ATTR_01 : '1'
+        trigger_attr_01 : '1',
+        trigger_attr_02 : createCampaignDto.trigger_attr_02,
+        trigger_attr_03 : createCampaignDto.trigger_attr_03,
+        trigger_attr_04 : createCampaignDto.trigger_attr_04,
+        trigger_attr_05 : createCampaignDto.trigger_attr_05,
+        trigger_attr_06 : createCampaignDto.trigger_attr_06,
+        trigger_attr_07 : createCampaignDto.trigger_attr_07,
+        trigger_attr_09 : profile, 
+        trigger_attr_10: createCampaignDto.trigger_attr_10
+      
+        
+
+   
 
 }
 
@@ -79,7 +104,7 @@ const eligibleData : EligibleModel =  {
 
     } else {
 
-      throw new InternalServerErrorException('Profile not eligibe')
+      throw new BadRequestException('Profile Not eligible')
     }
  
   
@@ -106,8 +131,17 @@ const eligibleData : EligibleModel =  {
     triggerDescription: createCampaignDto.triggerDescription ,
     isProcessed : 0,
     AFK_TRIGGERID_MSISDN :" " ,
-    TRIGGER_ATTR_09 : profile, 
-    TRIGGER_ATTR_01 : '2'
+    trigger_attr_01 : '2',
+    trigger_attr_02 : createCampaignDto.trigger_attr_02,
+    trigger_attr_03 : createCampaignDto.trigger_attr_03,
+    trigger_attr_04 : createCampaignDto.trigger_attr_04,
+    trigger_attr_05 : createCampaignDto.trigger_attr_05,
+    trigger_attr_06 : createCampaignDto.trigger_attr_06,
+    trigger_attr_07 : createCampaignDto.trigger_attr_07,
+    trigger_attr_09 : profile, 
+    trigger_attr_10: createCampaignDto.trigger_attr_10
+
+  
 
 
 
